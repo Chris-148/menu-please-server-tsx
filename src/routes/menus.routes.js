@@ -46,8 +46,9 @@ router.get("/all-menus-one-user", async (req, res) => {
   const { ownerId } = req.query;
   console.log("this is the userId", ownerId);
   try {
-    const menuResponse = await MenuModel.find({owner_id: new mongoose.Types.ObjectId(ownerId)})
-    .populate("restaurant_id");
+    const menuResponse = await MenuModel.find({
+      owner_id: new mongoose.Types.ObjectId(ownerId),
+    }).populate("restaurant_id");
     res.status(200).json({ allMenusForOneUser: menuResponse });
   } catch (err) {
     console.log(err);
