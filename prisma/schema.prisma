@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   
+  email        String   @unique
+  password     String
+  profileimage String?
+  menus        Menu[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Restaurant {
+  id              String   @id @default(uuid())
+  name            String
+  location        String?
+  restaurantImage String?
+  menus           Menu[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Menu {
+  id                String   @id @default(uuid())
+  owner_id          String
+  restaurant_id     String?
+  language          Language
+  menuImg           String
+  dishes            Dish[]
+  owner             User     @relation(fields: [owner_id], references: [id])
+  restaurant        Restaurant? @relation(fields: [restaurant_id], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Dish {
+  id                    String   @id @default(uuid())
+  menu_id               String
+  categoryOriginal      String
+  categoryEnglish       String
+  nameOriginal          String
+  nameEnglish           String
+  phoneticPronunciation String
+  descriptionEnglish    String
+  menu                  Menu     @relation(fields: [menu_id], references: [id])
+}
+
+enum Language {
+Arabic
+Chinese
+Hindi
+Indonesian
+Japanese
+Korean
+Malay
+Thai
+Vietnamese
+}
