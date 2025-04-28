@@ -73,35 +73,8 @@ router.post("/create-order", express.json(), async (req: any, res: any) => {
       });
     }
 
-  // Route to create waiter-friendly order
-router.post("/create-order", express.json(), async (req: any, res: any) => {    
-  try {
-    const { order, language } = req.body;
-
-    if (!order || !language) {
-      return res.status(400).json({
-        error: "Missing required parameters",
-        details: "Both order and language are required",
-      });
-    }
-
     const orderResult = await createOrderMenu(order, language);
 
-    res.status(200).send(orderResult);
-  } catch (error) {
-    console.error("Error creating order:", error);
-    res.status(500).json({
-      error: "Error creating order",
-      details: error.message,
-    });
-  }
-});
-
-
-    // Call the order creation function
-    const orderResult = await createOrderMenu(order, language);
-
-    // Return the order result
     res.status(200).send(orderResult);
   } catch (error) {
     console.error("Error creating order:", error);
