@@ -1,14 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const multer = require('multer');
+import express, { Router, Request, Response } from "express";
 const {
   GoogleGenAI,
   createUserContent,
   createPartFromUri,
 } = require("@google/genai");
+const router = express.Router();
+
 
 // Route to translate menu using a previously uploaded image URI
-router.post("/translate-menu-from-uri", express.json(), async (req, res) => {
+router.post("/translate-menu-from-uri", express.json(), async (req: any, res: any) => {
   try {
     const { imageUri, mimeType } = req.body;
 
@@ -37,7 +37,7 @@ router.post("/translate-menu-from-uri", express.json(), async (req, res) => {
 });
 
 //Route to upload audio file and transcribe audio and translate the transcription
-router.post("/translate-audio-from-uri", express.json(), async (req, res) => {
+router.post("/translate-audio-from-uri", express.json(), async (req: any, res: any) => {
   try {
     const { audioUri, mimeType, targetLanguage } = req.body;
 
@@ -62,7 +62,7 @@ router.post("/translate-audio-from-uri", express.json(), async (req, res) => {
 });
 
 // Route to create waiter-friendly order
-router.post("/create-order", express.json(), async (req, res) => {
+router.post("/create-order", express.json(), async (req: any, res: any) => {
   try {
     const { order, language } = req.body;
 
@@ -74,7 +74,7 @@ router.post("/create-order", express.json(), async (req, res) => {
     }
 
   // Route to create waiter-friendly order
-router.post("/create-order", express.json(), async (req, res) => {
+router.post("/create-order", express.json(), async (req: any, res: any) => {    
   try {
     const { order, language } = req.body;
 
@@ -117,7 +117,7 @@ const ai = new GoogleGenAI({
 });
 
 // Translation function using a previously uploaded image URI
-async function handleGeminiTranslationFromUri(imageUri, mimeType) {
+async function handleGeminiTranslationFromUri(imageUri: any, mimeType: any) {
   try {
     // Generate content using the already uploaded image URI
     const response = await ai.models.generateContent({
@@ -187,7 +187,7 @@ async function handleGeminiTranslationFromUri(imageUri, mimeType) {
 }
 
 // Translation function using a previously uploaded audioUri
-async function handleGeminiTranslationFromAudioUri(AudioUri, mimeType, targetLanguage) {
+  async function handleGeminiTranslationFromAudioUri(AudioUri: any, mimeType: any, targetLanguage: any) {
   try {
     console.log("targetLanguage:", targetLanguage)
     // Generate content using the already uploaded image URI
@@ -236,7 +236,7 @@ async function handleGeminiTranslationFromAudioUri(AudioUri, mimeType, targetLan
 }
 
 // Implementation of createOrderMenu function (unchanged)
-async function createOrderMenu(order, language) {
+async function createOrderMenu(order: any, language: any) {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",

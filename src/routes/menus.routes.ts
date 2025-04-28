@@ -94,8 +94,9 @@ router.get("/one-menu/:menuId", async (req: Request, res: Response) => {
 router.patch("/update-menu/:menuId", async (req: Request, res: Response) => {
   try {
     const { menuId } = req.params;
-    const { owner_id, restaurant_id, language, menuImg } = req.body;
+    const { owner_id, restaurant_id, language, menuImg, dishes } = req.body;
     
+    // First update the menu
     const updatedMenu = await prisma.menu.update({
       where: {
         id: menuId,
@@ -107,8 +108,36 @@ router.patch("/update-menu/:menuId", async (req: Request, res: Response) => {
         menuImg,
       },
     });
+
+    // If dishes are provided, update them
+    if (dishes && Array.isArray(dishes)) {
+      // First delete existing dishes for this menu
+      await prisma.dish.deleteMany({
+        where: {
+          menu_id: menuId,
+        },
+      });
+
+      // Then create new dishes
+      await prisma.dish.createMany({
+        data: dishes.map(dish => ({
+          ...dish,
+          menu_id: menuId,
+        })),
+      });
+    }
+
+    // Fetch the updated menu with its dishes
+    const finalMenu = await prisma.menu.findUnique({
+      where: {
+        id: menuId,
+      },
+      include: {
+        dishes: true,
+      },
+    });
     
-    res.status(200).json(updatedMenu);
+    res.status(200).json(finalMenu);
   } catch (err) {
     console.error(err);
     res.status(500).json({ errorMessage: "Error updating menu" });
@@ -120,6 +149,14 @@ router.delete("/delete-menu/:menuId", async (req: Request, res: Response) => {
   try {
     const { menuId } = req.params;
     
+    // First delete all dishes associated with the menu
+    await prisma.dish.deleteMany({
+      where: {
+        menu_id: menuId
+      }
+    });
+    
+    // Then delete the menu
     await prisma.menu.delete({
       where: {
         id: menuId,
