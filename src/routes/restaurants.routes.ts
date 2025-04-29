@@ -80,4 +80,4 @@ router.delete("/delete-restaurant/:restaurantId", async (req: Request, res: Resp
   }
 });
 
-module.exports = router;
+export default router;

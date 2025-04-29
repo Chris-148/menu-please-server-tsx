@@ -170,4 +170,4 @@ router.delete("/delete-menu/:menuId", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export default router;
