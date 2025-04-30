@@ -173,7 +173,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/krists/Documents/Ironhack/Module-3/Final Project/menu-please-server-tsx/src/generated/prisma",
+      "value": "C:\\Users\\wirsc\\Desktop\\Ironhack\\module-3\\week-3\\menu-please-server-tsx\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -182,16 +182,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/krists/Documents/Ironhack/Module-3/Final Project/menu-please-server-tsx/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\wirsc\\Desktop\\Ironhack\\module-3\\week-3\\menu-please-server-tsx\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -201,11 +201,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://krists@localhost:5432/menu-please-db"
+        "value": null
       }
     }
   },
@@ -249,8 +250,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
-path.join(process.cwd(), "src/generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
